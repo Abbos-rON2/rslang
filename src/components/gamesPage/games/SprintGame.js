@@ -12,7 +12,7 @@ export default function SprintGame(props) {
 
   function getRandomWordAndTranslation() {
     const randomNum = Math.round(Math.random());
-    const randomIndex = Math.floor(Math.random() * 21);
+    const randomIndex = Math.floor(Math.random() * 19);
 
     setCurrentWord(props.words[randomIndex].word);
 
