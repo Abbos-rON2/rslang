@@ -1,10 +1,10 @@
 .game_container{
-    width: 500px;
-    height: 500px;
+    width: 480px;
+    height: 480px;
     margin: 0 auto;
     background: #ffffffb5;
     border-radius: 10px;
-    box-shadow: 8px 7px 11px 1px #c4c4e3
+    box-shadow: 1px 2px 11px 1px #c4c4e3;
 }
 .points_section{
     height: 20%;
@@ -30,4 +30,8 @@ height: 20%;
 #button_ok{
     margin-right: 10px;
     width: 89px;
+}
+.sprint-wrapper{
+    background-image: url(../assets/sprint_back.jpg);
+    height: calc(100vh - 60px);
 }

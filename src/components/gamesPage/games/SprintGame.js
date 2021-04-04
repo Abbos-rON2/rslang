@@ -2,13 +2,18 @@ import "../../../styles/sprint_styles.css";
 import { CheckCircleTwoTone } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import { Button } from "antd";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
+import clickSound from '../../../assets/sprint_sound.wav'
+
 export default function SprintGame(props) {
+  console.log(props)
   const [currentWord, setCurrentWord] = useState(props.words[0].word);
   const [currentTranslation, setCurrentTranslation] = useState(
     props.words[0].wordTranslate
   );
   const [expected, setExpected] = useState(true);
+  const [points, setPoints] = useState(0);
+  const audioClick = new Audio(clickSound);
 
   function getRandomWordAndTranslation() {
     const randomNum = Math.round(Math.random());
@@ -27,10 +32,16 @@ export default function SprintGame(props) {
   }
 
   function isCorrect(answer) {
-    answer === expected
-      ? console.log("you are right!")
-      : console.log("you are wrong");
-      getRandomWordAndTranslation();
+    audioClick.play();
+     if (answer === expected) {
+      console.log("you are right!");
+      setPoints(points + 10);
+    } else {
+      console.log("you are wrong");
+
+    }
+ 
+    getRandomWordAndTranslation();
   }
   return (
     <Fragment>
@@ -38,7 +49,7 @@ export default function SprintGame(props) {
       <div>Timer</div>
       <div className="game_container">
         <section className="points_section">
-          <div>Points</div>
+          <div>{points}</div>
         </section>
         <section className="learn_section">
           <section className="check_marks_section">

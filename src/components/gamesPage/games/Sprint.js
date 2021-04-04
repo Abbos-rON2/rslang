@@ -10,10 +10,11 @@ export default function Sprint({location}) {
   const [words, setWords] = useState([])
   const [level, setLevel] = useState(null)
   const [welcome, setWelcome] = useState(true)
-  
-  useEffect(() => { // get words depending on the selected level
+  const randomPage = Math.floor(Math.random() * 29);
+
+  useEffect(() => { 
     if(level !== null){
-      fetch(`https://rs-lang.herokuapp.com/words?group=${level}&page=0}`)
+      fetch(`https://rs-lang.herokuapp.com/words?group=${level}&page=${randomPage}}`)
       .then((res) => res.json())
       .then(res => setWords(res))
     }}, [level])
