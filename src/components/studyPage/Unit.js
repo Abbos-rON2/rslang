@@ -11,7 +11,8 @@ export default function Unit() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.user);
+  const isAuth = useSelector(state => state.user.message === "Authenticated" ? true : false);
 
   const postDifficultWord = async wordId => {
     const rawResponse = await fetch(`https://rs-lang.herokuapp.com/users/${user.userId}/words/${wordId}`, {
@@ -102,12 +103,14 @@ export default function Unit() {
                     <source src={`https://rs-lang.herokuapp.com/${item.audioMeaning}`} type="audio/mp3" autoplay="autoplay"></source>
                     <source src={`https://rs-lang.herokuapp.com/${item.audioExample}`} type="audio/mp3" autoplay="autoplay"></source>
                   </audio>
-                  <div className="word-actions">
-                    {fetch(`https://rs-lang.herokuapp.com//users/${user.id}/words/${item.Id}`)}
-                    <Button type="primary" onClick={() => postDifficultWord(item.id)}>Difficult</Button>
-                    <Button type="primary" onClick={() => postLearnWord(item.id)}>Learn</Button>
-                    <Button type="primary" onClick={() => deleteWord(item.id)}>Delete</Button>
-                  </div>
+                  {
+                    isAuth &
+                    <div className="word-actions">
+                      <Button type="primary" onClick={() => postDifficultWord(item.id)}>Difficult</Button>
+                      <Button type="primary" onClick={() => postLearnWord(item.id)}>Learn</Button>
+                      <Button type="primary" onClick={() => deleteWord(item.id)}>Delete</Button>
+                    </div>
+                  }
                 </div>
               </div>
             </li>
