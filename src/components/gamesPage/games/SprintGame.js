@@ -6,13 +6,17 @@ import { Fragment, useState } from "react";
 import clickSound from '../../../assets/sprint_sound.wav'
 
 export default function SprintGame(props) {
-  console.log(props)
   const [currentWord, setCurrentWord] = useState(props.words[0].word);
   const [currentTranslation, setCurrentTranslation] = useState(
     props.words[0].wordTranslate
   );
   const [expected, setExpected] = useState(true);
   const [points, setPoints] = useState(0);
+  const [checkMarks, setCheckMarks] = useState([]);
+  
+  const addCheckMark = () => {
+    setCheckMarks(checkMarks.concat(<CheckCircleTwoTone twoToneColor="#52c41a" />));
+  };
   const audioClick = new Audio(clickSound);
 
   function getRandomWordAndTranslation() {
@@ -28,7 +32,6 @@ export default function SprintGame(props) {
       setCurrentTranslation(props.words[randomIndex].wordTranslate);
       setExpected(true);
     }
-    console.log(randomNum, randomIndex, currentWord, currentTranslation);
   }
 
   function isCorrect(answer) {
@@ -36,6 +39,7 @@ export default function SprintGame(props) {
      if (answer === expected) {
       console.log("you are right!");
       setPoints(points + 10);
+      addCheckMark();
     } else {
       console.log("you are wrong");
 
@@ -54,9 +58,7 @@ export default function SprintGame(props) {
         <section className="learn_section">
           <section className="check_marks_section">
             <div className="check_marks">
-              <CheckCircleTwoTone twoToneColor="#52c41a" />
-              <CheckCircleTwoTone twoToneColor="#52c41a" />
-              <CheckCircleTwoTone twoToneColor="#52c41a" />
+            {checkMarks}
             </div>
           </section>
           <section className="words_section">
