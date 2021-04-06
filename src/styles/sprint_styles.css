@@ -1,47 +1,53 @@
-.game_container{
-    width: 480px;
-    height: 480px;
-    margin: 0 auto;
-    background: #ffffffb5;
-    border-radius: 10px;
-    box-shadow: 1px 2px 11px 1px #c4c4e3;
+.game_container {
+  width: 480px;
+  height: 480px;
+  margin: 0 auto;
+  background: #ffffffb5;
+  border-radius: 10px;
+  box-shadow: 1px 2px 11px 1px #c4c4e3;
 }
-.points_section{
-    height: 20%;
-    background: #c4c4e3;
-    border-radius: 10px 10px 20% 20%;
-    transition: background 2s;
+.points_section {
+  height: 20%;
+  background: #c4c4e3;
+  border-radius: 10px 10px 20% 20%;
+  transition: background 2s;
 }
-.points_0{
-    background: ##ffeb3b99; 
+.points_0 {
+  background: ##ffeb3b99;
 }
-.points_1{
-    background: #aeec66c2; 
+.points_1 {
+  background: #aeec66c2;
 }
-.points_2{
-    background: #1890ffa8; 
+.points_2 {
+  background: #1890ffa8;
 }
-.learn_section{
-    height: 80%;
-    
+.learn_section {
+  height: 80%;
 }
-.check_marks_section{
-height: 10%;
+.check_marks_section {
+  height: 10%;
 }
-.words_section{
-height: 70%;
-display: flex;
-align-items: center;
-justify-content: center;
+.check_mark_inactive {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid green;
+ 
 }
-.buttons_section{
-height: 20%;
+.words_section {
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-#button_ok{
-    margin-right: 10px;
-    width: 89px;
+.buttons_section {
+  height: 20%;
 }
-.sprint-wrapper{
-    background-image: url(../assets/sprint_back.jpg);
-    height: calc(100vh - 60px);
+#button_ok {
+  margin-right: 10px;
+  width: 89px;
+}
+.sprint-wrapper {
+  background-image: url(../assets/sprint_back.jpg);
+  height: calc(100vh - 60px);
 }
