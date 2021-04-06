@@ -148,6 +148,7 @@ footer {
   justify-content: center;
 }
 .savanna-option{
+  cursor: pointer;
   color: white;
   border-radius: 5px;
   margin: 0 5px;
@@ -156,4 +157,14 @@ footer {
 }
 .savanna-level{
   margin-bottom: 10px;
+}
+.savanna-word{
+  color: white;
+  font-size: 20px;
+}
+.savanna-gameOver{
+  margin-top: 40%;
+  color: white;
+  font-size: 24px;
+  
 }
