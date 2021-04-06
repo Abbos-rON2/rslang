@@ -19,3 +19,52 @@
 
     margin: 10px;
 }
+
+ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+li {
+    display: flex;
+}
+
+li .word-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+
+    width: 450px;
+    height: 300px;
+
+    margin: 20px;
+    padding: 10px;
+
+    background-size: cover;
+}
+
+.word-card-details {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.6);
+
+    border-radius: 5px;
+}
+
+.groop-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+}
+
+.word-actions button{
+    margin-left: 10px;
+}
+
+.groop-buttons audio {
+    width: 100px;
+    margin-right: 50px;
+}
+
