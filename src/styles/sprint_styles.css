@@ -8,8 +8,18 @@
 }
 .points_section{
     height: 20%;
-    background: #ee82ee69;
+    background: #c4c4e3;
     border-radius: 10px 10px 20% 20%;
+    transition: background 2s;
+}
+.points_0{
+    background: ##ffeb3b99; 
+}
+.points_1{
+    background: #aeec66c2; 
+}
+.points_2{
+    background: #1890ffa8; 
 }
 .learn_section{
     height: 80%;

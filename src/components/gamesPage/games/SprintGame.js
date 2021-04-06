@@ -2,20 +2,27 @@ import "../../../styles/sprint_styles.css";
 import { CheckCircleTwoTone } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import { Button } from "antd";
-import { Fragment, useState } from "react";
-import clickSound from '../../../assets/sprint_sound.wav'
+import { Fragment, useState, useEffect } from "react";
+import clickSound from "../../../assets/sprint_sound.wav";
 
 export default function SprintGame(props) {
+  const [pointsClassName, setPointsClassName] = useState('points_section');
   const [currentWord, setCurrentWord] = useState(props.words[0].word);
   const [currentTranslation, setCurrentTranslation] = useState(
     props.words[0].wordTranslate
   );
   const [expected, setExpected] = useState(true);
   const [points, setPoints] = useState(0);
+  const [rightAnswersCounter, setRightAnswersCounter] = useState(0);
+  const [nextLevelPoints, setNextLevelPoints] = useState(0);
+  const [answersArray, setAnswersArray] = useState([]);
+  const [currentAnswer, setCurrentAnswer] = useState();
   const [checkMarks, setCheckMarks] = useState([]);
-  
+
   const addCheckMark = () => {
-    setCheckMarks(checkMarks.concat(<CheckCircleTwoTone twoToneColor="#52c41a" />));
+    setCheckMarks(
+      checkMarks.concat(<CheckCircleTwoTone twoToneColor="#52c41a" />)
+    );
   };
   const audioClick = new Audio(clickSound);
 
@@ -33,18 +40,52 @@ export default function SprintGame(props) {
       setExpected(true);
     }
   }
+  function checkRightAnswers() {
+    if (answersArray.length >= 3 && currentAnswer === "correct") {
+      if (
+        (answersArray[answersArray.length - 2] &&
+          answersArray[answersArray.length - 3]) === "correct"
+      ) {
+        switch (nextLevelPoints) {
+          case 0:
+            setPoints(points + 20);
+            setNextLevelPoints(nextLevelPoints + 1);
+            setPointsClassName('points_section points_0');
+            break;
+          case 1:
+            setPoints(points + 40);
+            setNextLevelPoints(nextLevelPoints + 1);
+            setPointsClassName('points_section points_1');
+            break;
+          case 2:
+            setPoints(points + 80);
+            setPointsClassName('points_section points_2');
+            break;
+        }
+      }
+    } else {
+      setPoints(points + 10);
+      setCheckMarks([]);
+    }
+  }
 
   function isCorrect(answer) {
     audioClick.play();
-     if (answer === expected) {
+
+    if (answer === expected) {
       console.log("you are right!");
-      setPoints(points + 10);
+      setCurrentAnswer("correct");
+      setAnswersArray(answersArray.concat(currentAnswer));
+      console.log(answersArray, answersArray.length, currentAnswer);
+      checkRightAnswers();
+      setRightAnswersCounter(rightAnswersCounter + 1);
       addCheckMark();
     } else {
       console.log("you are wrong");
-
+      setCurrentAnswer("incorrect");
+      setAnswersArray(answersArray.concat(currentAnswer));
     }
- 
+
     getRandomWordAndTranslation();
   }
   return (
@@ -52,14 +93,12 @@ export default function SprintGame(props) {
       <div>Спринт</div>
       <div>Timer</div>
       <div className="game_container">
-        <section className="points_section">
+        <section className={pointsClassName}>
           <div>{points}</div>
         </section>
         <section className="learn_section">
           <section className="check_marks_section">
-            <div className="check_marks">
-            {checkMarks}
-            </div>
+            <div className="check_marks">{checkMarks}</div>
           </section>
           <section className="words_section">
             <div className="words_wrapper">
