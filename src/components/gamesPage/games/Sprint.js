@@ -38,9 +38,5 @@ export default function Sprint({location}) {
   <SprintGame words={words}/>
       }
       </div>
-
-
   )
-
-    
 }

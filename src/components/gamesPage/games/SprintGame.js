@@ -2,7 +2,7 @@ import "../../../styles/sprint_styles.css";
 import { CheckCircleTwoTone } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import { Button } from "antd";
-import { Fragment, useState} from "react";
+import { Fragment, useState } from "react";
 import clickSound from "../../../assets/sprint_sound.wav";
 
 export default function SprintGame(props) {
@@ -38,35 +38,49 @@ export default function SprintGame(props) {
   }
 
   function checkRightAnswers() {
-    let currentPoints, pointsForNextLevel, pointsClassName;
+    let currentPoints, pointsForNextLevel, currentPointsClassName, newAnswersArray;
     if (answersArray.length >= 3 && currentAnswer === "correct") {
       if (
         (answersArray[answersArray.length - 2] &&
           answersArray[answersArray.length - 3]) === "correct"
       ) {
-        switch (nextLevelPoints) {
-          case 0:
-            currentPoints = points + 20;
-            pointsForNextLevel = nextLevelPoints + 1;
-            pointsClassName = "points_section points_0";
-            break;
+        pointsForNextLevel = nextLevelPoints + 1;
+        newAnswersArray = [];
+        switch (pointsForNextLevel) {
           case 1:
-            currentPoints = points + 40;
-            pointsForNextLevel = nextLevelPoints + 1;
-            pointsClassName = "points_section points_1";
+            currentPoints = points + 20;
+            currentPointsClassName = "points_section points_1";
             break;
           case 2:
+            currentPoints = points + 40;
+            currentPointsClassName = "points_section points_2";
+            break;
+          case 3:
             currentPoints = points + 80;
-            pointsClassName = "points_section points_2";
+            currentPointsClassName = "points_section points_3";
+            break;
+          default:
+            currentPoints = points;
+            currentPointsClassName = pointsClassName;
             break;
         }
       }
     } else {
       currentPoints = points + 10;
+      currentPointsClassName = pointsClassName;
+      pointsForNextLevel = nextLevelPoints;
     }
-    setPoints(currentPoints);
-    setNextLevelPoints(pointsForNextLevel);
-    setPointsClassName(pointsClassName);
+    console.log(currentPoints);
+    setPoints(currentPoints ? currentPoints : points);
+    setNextLevelPoints(pointsForNextLevel ? pointsForNextLevel : nextLevelPoints);
+    setPointsClassName(currentPointsClassName ? currentPointsClassName : "points_section");
+    setAnswersArray(newAnswersArray ? newAnswersArray : answersArray);
+  }
+
+  function clearCurrentStatus(){
+    setNextLevelPoints(0);
+    setPointsClassName("points_section");
+    setAnswersArray([]);
   }
 
   function isCorrect(answer) {
@@ -79,15 +93,11 @@ export default function SprintGame(props) {
     } else {
       console.log("you are wrong");
       receivedAnswer = "incorrect";
+      clearCurrentStatus();
+
     }
     setCurrentAnswer(receivedAnswer);
-    setAnswersArray(answersArray.concat(currentAnswer));
-    setRightAnswersCounter(() => {
-      if (answer === expected) {
-        rightAnswersCounter + 1;
-      }
-    });
-    setCheckMarkDisplay(() => {true});
+    setAnswersArray((answersArray) => answersArray.concat(receivedAnswer));
     getRandomWordAndTranslation();
   }
   return (

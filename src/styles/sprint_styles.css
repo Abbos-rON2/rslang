@@ -12,13 +12,13 @@
   border-radius: 10px 10px 20% 20%;
   transition: background 2s;
 }
-.points_0 {
-  background: ##ffeb3b99;
-}
 .points_1 {
-  background: #aeec66c2;
+  background: #ffeb3b99;
 }
 .points_2 {
+  background: #aeec66c2;
+}
+.points_3 {
   background: #1890ffa8;
 }
 .learn_section {
