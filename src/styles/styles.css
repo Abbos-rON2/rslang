@@ -136,6 +136,9 @@ footer {
   justify-content: space-between;
   padding: 0 10%;
 }
+.savanna-settings{
+  color: white;
+}
 .savanna-body{
   padding-bottom: 10%;
   display: flex;
@@ -162,9 +165,24 @@ footer {
   color: white;
   font-size: 20px;
 }
+.savanna-word_animate{
+  animation: word 3s linear  1;
+}
 .savanna-gameOver{
-  margin-top: 40%;
+  margin-top: 40vh;
   color: white;
   font-size: 24px;
   
+}
+@keyframes word{
+  0% {
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+        transform: translate(0, 0);
+  }
+  100% {
+    -webkit-transform: translate(0, 60vh);
+    -ms-transform: translate(0, 60vh);
+        transform: translate(0, 60vh);
+  }
 }
