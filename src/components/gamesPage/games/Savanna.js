@@ -9,7 +9,7 @@ import incorrect from '../../../assets/sound_incorrect.mp3'
 
 export default function Savanna({location}) {
   const wordDiv = useRef(null);
-  const time = useRef(null);
+  const timer = useRef(null);
 
   const [mode, setMode] = useState()
   const [welcome, setWelcome] = useState(true)
@@ -19,7 +19,6 @@ export default function Savanna({location}) {
   const [words, setWords] = useState(null)
   const [gameOver, setGameOver] = useState(false)
   
-  const [animate, setAnimate] = useState(false)
   const [round, setRound] = useState(0)
   const [currentWord, setCurrentWord] = useState()
   const [answer, setAnswer] = useState()
@@ -64,17 +63,14 @@ export default function Savanna({location}) {
   useEffect(() => {
     if(currentWord){
       wordDiv.current.className = 'savanna-word savanna-word_animate'
-      time.current = setTimeout(() => {
+      timer.current = setTimeout(() => {
+        wordDiv.current.className = 'savanna-word'
         sound_false()
         subtract()
         setAnswer(null)
-        if(wordDiv.current){
-          wordDiv.current.className = 'savanna-word'
-        }
         setRound(round+1)
       }, 3000)
     }
-    return () => clearTimeout(time.current)
   }, [currentWord])
 
   useEffect(() => {
@@ -105,7 +101,7 @@ export default function Savanna({location}) {
   const startRound = () => {
     const roundWords = words.slice((round)*4, (round+1)*4);
     const roundWord =  roundWords[Math.floor(Math.random() * 4)]
-    const roundOptions = roundWords.map( (item, i) => <div key={i} className='savanna-option' onClick={() => {setAnswer(i); clearTimeout(time.current);}}>{`${i + 1}. ${item.wordTranslate}`}</div>);
+    const roundOptions = roundWords.map( (item, i) => <div key={i} className='savanna-option' onClick={() => {setAnswer(i); clearTimeout(timer.current);}}>{`${i + 1}. ${item.wordTranslate}`}</div>);
     setCurrentWord(roundWord);
     setOptions(roundWords)
     setOptionsList(roundOptions);
