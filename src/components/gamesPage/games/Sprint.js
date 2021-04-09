@@ -14,7 +14,7 @@ export default function Sprint({location}) {
 
   useEffect(() => { 
     if(level !== null){
-      fetch(`https://rs-lang.herokuapp.com/words?group=${level}&page=${randomPage}}`)
+      fetch(`https://rs-lang.herokuapp.com/words?group=${level-1}&page=${randomPage}}`)
       .then((res) => res.json())
       .then(res => setWords(res))
     }}, [level])

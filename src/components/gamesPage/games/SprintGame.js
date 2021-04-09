@@ -2,10 +2,11 @@ import "../../../styles/sprint_styles.css";
 import { CheckCircleTwoTone } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import { Button } from "antd";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import clickSound from "../../../assets/sprint_sound.wav";
 
 export default function SprintGame(props) {
+  const checkMarkStartArr = [false, false, false];
   const [pointsClassName, setPointsClassName] = useState("points_section");
   const [currentWord, setCurrentWord] = useState(props.words[0].word);
   const [currentTranslation, setCurrentTranslation] = useState(
@@ -17,9 +18,17 @@ export default function SprintGame(props) {
   const [nextLevelPoints, setNextLevelPoints] = useState(0);
   const [answersArray, setAnswersArray] = useState([]);
   const [currentAnswer, setCurrentAnswer] = useState();
-  const [checkMarks, setCheckMarks] = useState([]);
-  const [checkMarkDisplay, setCheckMarkDisplay] = useState(false);
+  const [checkMarks, setCheckMarks] = useState(checkMarkStartArr);
   const audioClick = new Audio(clickSound);
+  const [counterOfAnswers, setCounterOfAnswers] = useState(0);
+ 
+  let checkEl = checkMarks.map((item, i) =>
+    item === false ? (
+      <CheckCircleTwoTone twoToneColor="#DCDCDC" key={i} />
+    ) : (
+      <CheckCircleTwoTone twoToneColor="#52c41a" key={i} />
+    )
+  );
 
   function getRandomWordAndTranslation() {
     let currentTranslation, expected;
@@ -38,14 +47,18 @@ export default function SprintGame(props) {
   }
 
   function checkRightAnswers() {
-    let currentPoints, pointsForNextLevel, currentPointsClassName, newAnswersArray;
-    if (answersArray.length >= 3 && currentAnswer === "correct") {
+    let currentPoints,
+      pointsForNextLevel,
+      currentPointsClassName,
+      newAnswersArray;     
+         if (answersArray.length >= 3 && currentAnswer === "correct") {
       if (
         (answersArray[answersArray.length - 2] &&
           answersArray[answersArray.length - 3]) === "correct"
       ) {
         pointsForNextLevel = nextLevelPoints + 1;
         newAnswersArray = [];
+       
         switch (pointsForNextLevel) {
           case 1:
             currentPoints = points + 20;
@@ -70,35 +83,51 @@ export default function SprintGame(props) {
       currentPointsClassName = pointsClassName;
       pointsForNextLevel = nextLevelPoints;
     }
-    console.log(currentPoints);
     setPoints(currentPoints ? currentPoints : points);
-    setNextLevelPoints(pointsForNextLevel ? pointsForNextLevel : nextLevelPoints);
-    setPointsClassName(currentPointsClassName ? currentPointsClassName : "points_section");
+    setNextLevelPoints(
+      pointsForNextLevel ? pointsForNextLevel : nextLevelPoints
+    );
+    setPointsClassName(
+      currentPointsClassName ? currentPointsClassName : "points_section"
+    );
     setAnswersArray(newAnswersArray ? newAnswersArray : answersArray);
+   
   }
 
-  function clearCurrentStatus(){
+  function clearCurrentStatus() {
     setNextLevelPoints(0);
     setPointsClassName("points_section");
     setAnswersArray([]);
+    setCheckMarks(checkMarkStartArr);
+    setCounterOfAnswers(0);
   }
 
   function isCorrect(answer) {
-    let receivedAnswer;
     audioClick.play();
+    let receivedAnswer, typeOfCheckMark, newArrOfCheckMarks;
+    setCounterOfAnswers(counterOfAnswers >= 3 ? 0 : counterOfAnswers + 1);
     if (answer === expected) {
-      console.log("you are right!");
-      receivedAnswer = "correct";
       checkRightAnswers();
+      receivedAnswer = "correct";
+      typeOfCheckMark = true;
+      
+     
     } else {
-      console.log("you are wrong");
       receivedAnswer = "incorrect";
+      typeOfCheckMark = false;
       clearCurrentStatus();
-
     }
+    
     setCurrentAnswer(receivedAnswer);
     setAnswersArray((answersArray) => answersArray.concat(receivedAnswer));
+
+    newArrOfCheckMarks = [...checkMarks];
+    newArrOfCheckMarks[counterOfAnswers] = typeOfCheckMark;
+    setCheckMarks(newArrOfCheckMarks.length > 3 || typeOfCheckMark === false ? checkMarkStartArr : newArrOfCheckMarks);
+
+    
     getRandomWordAndTranslation();
+console.log(checkMarks, counterOfAnswers)
   }
   return (
     <Fragment>
@@ -109,13 +138,7 @@ export default function SprintGame(props) {
           <div>{points}</div>
         </section>
         <section className="learn_section">
-          <section className="check_marks_section">
-            {checkMarkDisplay ? (
-              <CheckCircleTwoTone twoToneColor="#52c41a" />
-            ) : (
-              <div className="check_mark_inactive"></div>
-            )}
-          </section>
+          <section className="check_marks_section">{checkEl}</section>
           <section className="words_section">
             <div className="words_wrapper">
               <div>{currentWord}</div>
