@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState} from 'react'
+import { useEffect, useState, useRef} from 'react'
 import { Button } from 'antd'
 import { HeartFilled, HeartOutlined} from '@ant-design/icons'
 import useSound from 'use-sound'
@@ -8,14 +8,18 @@ import incorrect from '../../../assets/sound_incorrect.mp3'
 
 
 export default function Savanna({location}) {
+  const wordDiv = useRef(null);
+  const time = useRef(null);
 
   const [mode, setMode] = useState()
   const [welcome, setWelcome] = useState(true)
   const [level, setLevel] = useState(null)
+  const [buttonLoading, setButtonLoading] = useState(false)
   const [page, setPage] = useState(0)
   const [words, setWords] = useState(null)
   const [gameOver, setGameOver] = useState(false)
   
+  const [animate, setAnimate] = useState(false)
   const [round, setRound] = useState(0)
   const [currentWord, setCurrentWord] = useState()
   const [answer, setAnswer] = useState()
@@ -31,6 +35,7 @@ export default function Savanna({location}) {
 
   useEffect(() => { // get words depending on the selected level
     if(level !== null){
+      setButtonLoading(true)
       fetch(`https://rs-lang.herokuapp.com/words?group=${level -1}&page=${page}`).then(res => res.json()).then(res => setWords(res))
     }}, [level])
 
@@ -38,6 +43,8 @@ export default function Savanna({location}) {
     if(words)
       fetch(`https://rs-lang.herokuapp.com/words?group=${level -1}&page=${page}`).then(res => res.json()).then(res => setWords(words.concat(res)))
     }, [page])
+
+
 
 
   useEffect(() => {
@@ -48,13 +55,30 @@ export default function Savanna({location}) {
         sound_false()
         subtract()
       }
+      wordDiv.current.className = 'savanna-word'
       setRound(round + 1)
       setAnswer(null)
     }
   }, [answer])
 
   useEffect(() => {
-    if(round){
+    if(currentWord){
+      wordDiv.current.className = 'savanna-word savanna-word_animate'
+      time.current = setTimeout(() => {
+        sound_false()
+        subtract()
+        setAnswer(null)
+        if(wordDiv.current){
+          wordDiv.current.className = 'savanna-word'
+        }
+        setRound(round+1)
+      }, 3000)
+    }
+    return () => clearTimeout(time.current)
+  }, [currentWord])
+
+  useEffect(() => {
+    if(round && !gameOver){
       startRound()
     }
     if((round + 1) % 5 === 0) {
@@ -76,16 +100,12 @@ export default function Savanna({location}) {
     }
   }
 
- 
-  const handlePlayButton = () => {
-    setWelcome(false);
-    startRound();
-  }
+  const handlePlayButton = () => { setWelcome(false); startRound(); }
 
   const startRound = () => {
     const roundWords = words.slice((round)*4, (round+1)*4);
     const roundWord =  roundWords[Math.floor(Math.random() * 4)]
-    const roundOptions = roundWords.map( (item, i) => <div key={i} className='savanna-option' onClick={() => setAnswer(i)}>{`${i + 1}. ${item.wordTranslate}`}</div>);
+    const roundOptions = roundWords.map( (item, i) => <div key={i} className='savanna-option' onClick={() => {setAnswer(i); clearTimeout(time.current);}}>{`${i + 1}. ${item.wordTranslate}`}</div>);
     setCurrentWord(roundWord);
     setOptions(roundWords)
     setOptionsList(roundOptions);
@@ -100,7 +120,7 @@ export default function Savanna({location}) {
         <div className="savanna-level">
         {mode === 'general'&& !level ? selectLevels : null}
         </div>
-        <Button type="primary" onClick={handlePlayButton } shape="round" size='large' disabled={words === null || level === null ? true: false }>Play</Button>
+        <Button type="primary" onClick={handlePlayButton} shape="round" size='large' loading={buttonLoading && !words} disabled={words === null || level === null ? true: false }>Play</Button>
       </div> 
       : 
         gameOver ? <div className="savanna-gameOver">Game Over</div> : 
@@ -112,7 +132,7 @@ export default function Savanna({location}) {
           </div>
         </div>
         <div className="savanna-body">
-          <div className="savanna-word">
+          <div ref={wordDiv}>
             {currentWord.word}
           </div>
           <div className="savanna-options">
