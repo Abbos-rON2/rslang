@@ -6,8 +6,8 @@ import { Fragment, useState, useEffect } from "react";
 import clickSound from "../../../assets/sprint_sound.wav";
 import GameOver from "./GameOver";
 
-export default function SprintGame({words}) {
-  const [timer, setTimer] = useState(60);
+export default function SprintGame({ words }) {
+  const [sec, setSec] = useState(5);
   const [gameOver, setGameOver] = useState(false);
 
   const defaultMarksValue = [false, false, false];
@@ -26,14 +26,17 @@ export default function SprintGame({words}) {
   const audioClick = new Audio(clickSound);
 
   useEffect(() => {
-    timer > 0 && setTimeout(() => setTimer(timer - 1), 1000);
-  }, [timer]);
-
-  useEffect(() => {
-    if (timer === 0) {
-      setGameOver(true);
-    }
-  }, [timer]);
+    const timer = setTimeout(() => {
+      if (sec === 0) {
+        setGameOver(true);
+      } else {
+        setSec((sec) => sec - 1);
+      }
+    }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [sec, gameOver]);
 
   useEffect(() => {
     switch (levelPoints) {
@@ -48,7 +51,7 @@ export default function SprintGame({words}) {
         break;
     }
   }, [levelPoints]);
-  
+
   let checkEl = checkMarks.map((item, i) =>
     !item ? (
       <CheckCircleTwoTone twoToneColor="#DCDCDC" key={i} />
@@ -106,45 +109,41 @@ export default function SprintGame({words}) {
   }
   return (
     <Fragment>
-      {gameOver ? (
-        <GameOver points={points} />
-      ) : (
-        <Fragment>
-          <div>Спринт</div>
-          <div>{timer}</div>
-          <div className="game_container">
-            <section className={pointsClassName}>
-              <div>{points}</div>
-            </section>
-            <section className="learn_section">
-              <section className="check_marks_section">{checkEl}</section>
-              <section className="words_section">
-                <div className="words_wrapper">
-                  <div>{currentWord}</div>
-                  <div>{currentTranslation}</div>
-                </div>
-              </section>
-              <section className="buttons_section">
-                <Button
-                  type="primary"
-                  id="button_ok"
-                  onClick={() => isCorrect(true)}
-                >
-                  Верно
-                </Button>
-                <Button
-                  type="primary"
-                  danger
-                  id="button_wrong"
-                  onClick={() => isCorrect(false)}
-                >
-                  Неверно
-                </Button>
-              </section>
-            </section>
-          </div>
-        </Fragment>
-      )}
+      <GameOver points={points} gameOver={gameOver} />
+
+      <div>Спринт</div>
+      <div>{sec}</div>
+      <div className="game_container">
+        <section className={pointsClassName}>
+          <div>{points}</div>
+        </section>
+        <section className="learn_section">
+          <section className="check_marks_section">{checkEl}</section>
+          <section className="words_section">
+            <div className="words_wrapper">
+              <div>{currentWord}</div>
+              <div>{currentTranslation}</div>
+            </div>
+          </section>
+          <section className="buttons_section">
+            <Button
+              type="primary"
+              id="button_ok"
+              onClick={() => isCorrect(true)}
+            >
+              Верно
+            </Button>
+            <Button
+              type="primary"
+              danger
+              id="button_wrong"
+              onClick={() => isCorrect(false)}
+            >
+              Неверно
+            </Button>
+          </section>
+        </section>
+      </div>
     </Fragment>
   );
 }
