@@ -9,7 +9,6 @@ import React from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 export default function SprintGame({ words }) {
-  const [sec, setSec] = useState(5);
   const [gameOver, setGameOver] = useState(false);
 
   const defaultMarksValue = [false, false, false];
@@ -120,7 +119,7 @@ export default function SprintGame({ words }) {
       <div className="timer-wrapper">
       <CountdownCircleTimer size="100"
           isPlaying
-          duration={10}
+          duration={60}
           colors={[["#34aeeb", 0.43], ["#9072a3", 0.43], ["#f03d11"]]}
           strokeWidth={5}
         >
@@ -130,6 +129,7 @@ export default function SprintGame({ words }) {
       <div className="game_container">
         <section className={pointsClassName}>
           <div>{points}</div>
+          <span>+ {levelPoints} очков за слово</span>
         </section>
         <section className="learn_section">
           <section className="check_marks_section">{checkEl}</section>
