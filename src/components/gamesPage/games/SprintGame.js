@@ -97,8 +97,10 @@ export default function SprintGame({ words }) {
 
     const levelPassed = checkMarks.every(Boolean);
     if (levelPassed) {
-      const nextLevelPoints = levelPoints * 2;
-      setLevelPoints(nextLevelPoints);
+      if(levelPoints !== 80){
+        const nextLevelPoints = levelPoints * 2;
+        setLevelPoints(nextLevelPoints);
+      }
       setCheckMarks(defaultMarksValue);
     }
   }
@@ -126,7 +128,7 @@ export default function SprintGame({ words }) {
       <CountdownCircleTimer size="100"
           isPlaying
           duration={60}
-          colors={[["#34aeeb", 0.43], ["#9072a3", 0.43], ["#f03d11"]]}
+          colors={[["#34aeeb", 0.45], ["#6589a1", 0.45], ["#f03d11"]]}
           strokeWidth={5}
         >
           {renderTime}
@@ -134,8 +136,8 @@ export default function SprintGame({ words }) {
         </div>
       <div className="game_container">
         <section className={pointsClassName}>
-          <div>{points}</div>
-          <span>+ {levelPoints} очков за слово</span>
+          <div className="points">{points}</div>
+          <span className="level-points">+ {levelPoints} очков за слово</span>
         </section>
         <section className="learn_section">
           <section className="check_marks_section">{checkEl}</section>
