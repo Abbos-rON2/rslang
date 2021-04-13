@@ -3,10 +3,12 @@ import { CheckCircleTwoTone } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import { Button } from "antd";
 import { Fragment, useState, useEffect } from "react";
-import clickSound from "../../../assets/sprint_sound.wav";
 import GameOver from "./GameOver";
 import React from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import useSound from 'use-sound'
+import correct from '../../../assets/sound_correct.mp3'
+import incorrect from '../../../assets/sound_incorrect.mp3'
 
 export default function SprintGame({ words }) {
   const [gameOver, setGameOver] = useState(false);
@@ -24,7 +26,8 @@ export default function SprintGame({ words }) {
   );
   const [expected, setExpected] = useState(true);
 
-  const audioClick = new Audio(clickSound);
+  const [sound_true] = useSound(correct);
+  const [sound_false] = useSound(incorrect);
 
   useEffect(() => {
       if (gameOver) {
@@ -107,10 +110,13 @@ export default function SprintGame({ words }) {
   }
 
   function isCorrect(answer) {
-    audioClick.play();
-
-    answer === expected ? addPoints() : clearCurrentStatus();
-
+    if (answer === expected ) {
+      sound_true();
+      addPoints();
+    } else{
+      sound_false();
+      clearCurrentStatus();
+    }
     getRandomWordAndTranslation();
   }
   return (
