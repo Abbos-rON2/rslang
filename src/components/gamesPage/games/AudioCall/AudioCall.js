@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
-import css from './AudioCall.module.css';
+import S from './AudioCall.module.css';
+import DescriptionGame from './DescriptionGame';
 
 const ContantGame = () => {
   return (
@@ -17,6 +18,7 @@ const ContantGame = () => {
 
 const AudioCall = () => {
   const [isGame, setIsGame] = useState(false);
+  const [words, setWords] = useState(null);
   const onClickStartBtn = () => {
     setIsGame((prevIsGame) => !prevIsGame);
   };
@@ -24,14 +26,16 @@ const AudioCall = () => {
   useEffect(() => {
     fetch('https://rs-lang.herokuapp.com/words')
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => setWords(data));
   }, []);
 
+  if (words) {
+    console.log(words);
+  }
+
   return (
-    <div className={css.game}>
-      <button className={css['start-btn']} onClick={onClickStartBtn}>
-        START
-      </button>
+    <div className={S['audio-call-wrapper']}>
+      {!isGame && <DescriptionGame handlerStartBtn={onClickStartBtn} />}
       {isGame && <ContantGame />}
     </div>
   );
