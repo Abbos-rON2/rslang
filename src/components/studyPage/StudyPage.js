@@ -1,8 +1,10 @@
 import "animate.css/animate.css";
 import "./studyPage.css";
 import { Link, Switch, useRouteMatch, Route} from "react-router-dom";
-import {numberOfUnits} from "../../constants/constants"
+import { numberOfUnits } from "../../constants/constants"
+import { Fragment } from "react";
 import Unit from './Unit'
+import Dictionary from "./Dictionary";
 
 export default function StudyPage() {
   const { path, url } = useRouteMatch();
@@ -20,14 +22,20 @@ export default function StudyPage() {
   });
 
   return (
-    <Switch>
-      <Route path={path} exact>
-        <div className="study_wrapper">
-          <div className="units_wrapper">{unit}</div>
-        </div>
-      </Route>
-      <Route path={`${path}/unit-:number`} component={Unit}/>
-    </Switch>
-
+    <Fragment >
+      <div className='study-page_links'>
+        <Link to={`${path}/dictionary`}>dictionary</Link>
+        <Link to={`${path}`}>Words</Link>
+      </div>
+      <Switch>
+        <Route path={path} exact>
+          <div className="study_wrapper">
+            <div className="units_wrapper">{unit}</div>
+          </div>
+        </Route>
+        <Route path={`${path}/unit-:number`} component={Unit}/>
+        <Route path={`${path}/dictionary`} component={Dictionary}/>
+      </Switch>
+    </Fragment>
   );
 }
