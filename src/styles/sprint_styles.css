@@ -21,6 +21,16 @@
 .points_3 {
   background: #1890ffa8;
 }
+.points{
+  font-size: 24px;
+  font-family: 'Indie Flower', cursive;
+  color: white;
+  text-shadow: 2px 1px 1px #0000006e;
+}
+.level-points{
+  font-family: 'Indie Flower', cursive;
+  color: #5d5353;
+}
 .learn_section {
   height: 80%;
 }

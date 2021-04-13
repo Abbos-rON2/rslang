@@ -16,7 +16,7 @@ export default function GameOver({ points, gameOver }) {
   return (
     <>
       <Modal
-        title="Basic Modal"
+        title="Game Over"
         visible={isModalVisible}
         onOk={handleOk}
         footer={[
@@ -29,8 +29,8 @@ export default function GameOver({ points, gameOver }) {
           </Button>,
         ]}
       >
-        <p>Game Over</p>
-        <div>Total points: {points}</div>
+        <p className="modal-text">Total points:</p>
+        <div className="modal-points"> {points}</div>
       </Modal>
     </>
   );
