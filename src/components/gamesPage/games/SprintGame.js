@@ -3,11 +3,14 @@ import { CheckCircleTwoTone } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import { Button } from "antd";
 import { Fragment, useState, useEffect } from "react";
-import clickSound from "../../../assets/sprint_sound.wav";
 import GameOver from "./GameOver";
+import React from "react";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import useSound from 'use-sound'
+import correct from '../../../assets/sound_correct.mp3'
+import incorrect from '../../../assets/sound_incorrect.mp3'
 
 export default function SprintGame({ words }) {
-  const [sec, setSec] = useState(5);
   const [gameOver, setGameOver] = useState(false);
 
   const defaultMarksValue = [false, false, false];
@@ -23,20 +26,14 @@ export default function SprintGame({ words }) {
   );
   const [expected, setExpected] = useState(true);
 
-  const audioClick = new Audio(clickSound);
+  const [sound_true] = useSound(correct);
+  const [sound_false] = useSound(incorrect);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (sec === 0) {
+      if (gameOver) {
         setGameOver(true);
-      } else {
-        setSec((sec) => sec - 1);
-      }
-    }, 1000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [sec, gameOver]);
+      } 
+  }, [gameOver]);
 
   useEffect(() => {
     switch (levelPoints) {
@@ -51,6 +48,19 @@ export default function SprintGame({ words }) {
         break;
     }
   }, [levelPoints]);
+
+  const renderTime = ({ remainingTime }) => {
+    if (remainingTime === 0) {
+      clearTimeout(remainingTime);
+      setGameOver(true);
+    }
+    return (
+      <div className="timer">
+        <div className="time-value">{remainingTime}</div>
+        <div className="text">seconds</div>
+      </div>
+    );
+  };
 
   let checkEl = checkMarks.map((item, i) =>
     !item ? (
@@ -73,7 +83,6 @@ export default function SprintGame({ words }) {
       currentTranslation = words[randomIndex].wordTranslate;
       expected = true;
     }
-
     setCurrentTranslation(currentTranslation);
     setExpected(expected);
   }
@@ -101,21 +110,32 @@ export default function SprintGame({ words }) {
   }
 
   function isCorrect(answer) {
-    audioClick.play();
-
-    answer === expected ? addPoints() : clearCurrentStatus();
-
+    if (answer === expected ) {
+      sound_true();
+      addPoints();
+    } else{
+      sound_false();
+      clearCurrentStatus();
+    }
     getRandomWordAndTranslation();
   }
   return (
     <Fragment>
       <GameOver points={points} gameOver={gameOver} />
-
-      <div>Спринт</div>
-      <div>{sec}</div>
+      <div className="timer-wrapper">
+      <CountdownCircleTimer size="100"
+          isPlaying
+          duration={60}
+          colors={[["#34aeeb", 0.43], ["#9072a3", 0.43], ["#f03d11"]]}
+          strokeWidth={5}
+        >
+          {renderTime}
+        </CountdownCircleTimer>
+        </div>
       <div className="game_container">
         <section className={pointsClassName}>
           <div>{points}</div>
+          <span>+ {levelPoints} очков за слово</span>
         </section>
         <section className="learn_section">
           <section className="check_marks_section">{checkEl}</section>
@@ -128,7 +148,8 @@ export default function SprintGame({ words }) {
           <section className="buttons_section">
             <Button
               type="primary"
-              id="button_ok"
+              id="button_ok" 
+              disabled={gameOver ? true: false }
               onClick={() => isCorrect(true)}
             >
               Верно
@@ -137,6 +158,7 @@ export default function SprintGame({ words }) {
               type="primary"
               danger
               id="button_wrong"
+              disabled={gameOver ? true: false }
               onClick={() => isCorrect(false)}
             >
               Неверно
