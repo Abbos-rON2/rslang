@@ -51,3 +51,9 @@
   background-image: url(../assets/sprint_back.jpg);
   height: calc(100vh - 60px);
 }
+.timer-wrapper{
+  padding: 10px;
+}
+.time-value{
+  font-size: 30px;
+}
