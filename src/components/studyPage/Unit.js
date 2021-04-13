@@ -29,7 +29,6 @@ export default function Unit() {
     });
     const content = await rawResponse;
     if(content.ok === true){alert('Word was created!')}
-    console.log(await content.json())
   }
 
   const postLearnWord = async wordId => {
@@ -47,21 +46,23 @@ export default function Unit() {
     });
     const content = await rawResponse;
     if(content.ok === true){alert('Word was created!')}
-    console.log(await content.json())
   }
 
-  const deleteWord = async wordId => {
+  const postDeletedWord = async wordId => {
     const rawResponse = await fetch(`https://rs-lang.herokuapp.com/users/${user.userId}/words/${wordId}`, {
-      method: 'DELETE',
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
+      },
+      body: JSON.stringify({
+          "difficulty": "deleted",
+          "optional": {}
+      })
     });
     const content = await rawResponse;
     if(content.ok === true){alert('Word was deleted!')}
-    console.log(await content.json())
   }
 
   useEffect(() => {
@@ -100,15 +101,13 @@ export default function Unit() {
                 <div className="groop-buttons">
                   <audio controls>
                     <source src={`https://rs-lang.herokuapp.com/${item.audio}`} type="audio/mp3"></source>
-                    <source src={`https://rs-lang.herokuapp.com/${item.audioMeaning}`} type="audio/mp3" autoplay="autoplay"></source>
-                    <source src={`https://rs-lang.herokuapp.com/${item.audioExample}`} type="audio/mp3" autoplay="autoplay"></source>
                   </audio>
                   {
-                    isAuth &
+                    isAuth &&
                     <div className="word-actions">
                       <Button type="primary" onClick={() => postDifficultWord(item.id)}>Difficult</Button>
                       <Button type="primary" onClick={() => postLearnWord(item.id)}>Learn</Button>
-                      <Button type="primary" onClick={() => deleteWord(item.id)}>Delete</Button>
+                      <Button type="primary" onClick={() => postDeletedWord(item.id)}>Delete</Button>
                     </div>
                   }
                 </div>
