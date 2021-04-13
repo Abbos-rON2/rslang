@@ -97,8 +97,10 @@ export default function SprintGame({ words }) {
 
     const levelPassed = checkMarks.every(Boolean);
     if (levelPassed) {
-      const nextLevelPoints = levelPoints * 2;
-      setLevelPoints(nextLevelPoints);
+      if(levelPoints !== 80){
+        const nextLevelPoints = levelPoints * 2;
+        setLevelPoints(nextLevelPoints);
+      }
       setCheckMarks(defaultMarksValue);
     }
   }
