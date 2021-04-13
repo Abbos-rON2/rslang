@@ -10,14 +10,21 @@ export default function Sprint({location}) {
   const [words, setWords] = useState([])
   const [level, setLevel] = useState(null)
   const [welcome, setWelcome] = useState(true)
+  
   const randomPage = Math.floor(Math.random() * 29);
+  const randomPage2 = Math.floor(Math.random() * 29);
+  const randomPage3 = Math.floor(Math.random() * 29);
 
   useEffect(() => { 
     if(level !== null){
-      fetch(`https://rs-lang.herokuapp.com/words?group=${level-1}&page=${randomPage}}`)
-      .then((res) => res.json())
-      .then(res => setWords(res))
-    }}, [level])
+      Promise.all([
+        fetch(`https://rs-lang.herokuapp.com/words?group=${level-1}&page=${randomPage}}`).then(res => res.json()),
+        fetch(`https://rs-lang.herokuapp.com/words?group=${level-1}&page=${randomPage2}}`).then(res => res.json()),
+        fetch(`https://rs-lang.herokuapp.com/words?group=${level-1}&page=${randomPage3}}`).then(res => res.json()),
+    ]).then(([words1, words2, words3]) => {
+        setWords(words.concat(words1, words2, words3));
+    })
+    }}, [level]);
 
   useEffect(() => { setMode(location.state.from === 'GamesPage' ? 'general' : 'personal') }, [])
 
