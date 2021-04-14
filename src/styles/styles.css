@@ -8,7 +8,8 @@
   flex-direction: column;
 }
 
-.title {
+.title,
+.main_h1 {
   color: #40a9ff;
 }
 
@@ -19,7 +20,7 @@ footer {
   position: fixed;
   left: 0;
   bottom: 0;
-  right: 0; 
+  right: 0;
   text-align: center;
   box-shadow: 2px -1px 2px #f0f1f2;
   border-top: 1px solid #f0f0f0;
@@ -57,6 +58,9 @@ footer {
   width: 30%;
   margin: 0 auto;
 }
+.main_page_about{
+  min-height: 250px;
+}
 
 .main_video {
   width: auto;
@@ -67,7 +71,8 @@ footer {
   display: flex;
   flex-direction: column;
 }
-.units_wrapper, .games_wrapper {
+.units_wrapper,
+.games_wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 50px;
@@ -75,7 +80,8 @@ footer {
   max-width: 60%;
   margin: 0 auto;
 }
-.unit_div, .games_div {
+.unit_div,
+.games_div {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,17 +92,17 @@ footer {
   border-radius: 5px;
   font-weight: 600;
 }
-.select_level_title{
+.select_level_title {
   font-size: 16px;
 }
-.undisplayed{
+.undisplayed {
   display: none;
 }
 
 .statistic_page {
-    box-shadow: 0 -2px 8px #f0f1f2;
-    border-top: 1px solid #f0f0f0;
-    background: #ffffffd9;
+  box-shadow: 0 -2px 8px #f0f1f2;
+  border-top: 1px solid #f0f0f0;
+  background: #ffffffd9;
   width: 100%;
   max-height: 100%;
 }
@@ -107,17 +113,17 @@ footer {
 }
 
 /* Savanna Game Styles*/
-.savanna-wrapper{
+.savanna-wrapper {
   display: flex;
   flex-direction: column;
-  background-image: linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),url('https://cdn.britannica.com/92/140492-050-0D2E3D22/Australian-Outback-trees-grasses-savanna-landscapes.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("https://cdn.britannica.com/92/140492-050-0D2E3D22/Australian-Outback-trees-grasses-savanna-landscapes.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  height: calc(100vh - 60px); 
+  height: calc(100vh - 60px);
 }
-.savanna-welcome{
-
+.savanna-welcome {
   padding: 20%;
   display: flex;
   flex-direction: column;
@@ -126,31 +132,31 @@ footer {
   width: 100%;
   height: 100%;
 }
-.savanna-welcome > *{
+.savanna-welcome > * {
   color: white;
 }
-.savanna-header{
+.savanna-header {
   display: flex;
   height: 25px;
   width: 100%;
   justify-content: space-between;
   padding: 0 10%;
 }
-.savanna-settings{
+.savanna-settings {
   color: white;
 }
-.savanna-body{
+.savanna-body {
   padding-bottom: 10%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: calc(100% - 65px);
 }
-.savanna-options{
+.savanna-options {
   display: flex;
   justify-content: center;
 }
-.savanna-option{
+.savanna-option {
   cursor: pointer;
   color: white;
   border-radius: 5px;
@@ -158,39 +164,62 @@ footer {
   background: #ffffff44;
   padding: 5px;
 }
-.savanna-level{
+.savanna-level {
   margin-bottom: 10px;
 }
-.savanna-word{
+.savanna-word {
   color: white;
   font-size: 20px;
 }
-.savanna-word_animate{
-  animation: word 3s linear  1;
+.savanna-word_animate {
+  animation: word 3s linear 1;
 }
-.savanna-gameOver{
+.savanna-gameOver {
   margin-top: 40vh;
   color: white;
   font-size: 24px;
-  
 }
-.modal-text, .modal-points{
+.modal-text,
+.modal-points {
   display: flex;
   justify-content: center;
   font-size: 24px;
 }
-.modal-points{
+.modal-points {
   color: #03a9f4;
 }
-@keyframes word{
+@keyframes word {
   0% {
     -webkit-transform: translate(0, 0);
     -ms-transform: translate(0, 0);
-        transform: translate(0, 0);
+    transform: translate(0, 0);
   }
   100% {
     -webkit-transform: translate(0, 60vh);
     -ms-transform: translate(0, 60vh);
-        transform: translate(0, 60vh);
+    transform: translate(0, 60vh);
   }
+}
+.team_wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-top: 3%;
+}
+
+.member_div {
+  width: 350px;
+  height: 250px;
+  border-radius: 20px;
+  display: flex;
+  background: white;
+  overflow: hidden;
+}
+.member_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.main_page_team {
+  min-height: 500px;
 }
