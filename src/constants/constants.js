@@ -25,7 +25,7 @@ export const listOfGames = [
 export const teamInfo = [
   {
     name: "Abbos",
-    photo: team1,
+    photo: "",
     text: "Реализовал подключение бекенда, форму регистрации, игру 'Спринт', подключение статистики",
     link: "https://github.com/Abbos-rON2",
   },
