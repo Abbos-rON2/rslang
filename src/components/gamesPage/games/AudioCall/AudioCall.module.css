@@ -1,5 +1,9 @@
 .audio-call-wrapper {
-  background: url(https://www.sylvaniachurch.com/wp-content/uploads/2019/09/Sylvania-Media.jpeg) no-repeat center/cover;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(https://www.sylvaniachurch.com/wp-content/uploads/2019/09/Sylvania-Media.jpeg) no-repeat center/cover;
+  /* background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
   margin: 0 auto;
   width: 100%;
   height: calc(100vh - 60px);

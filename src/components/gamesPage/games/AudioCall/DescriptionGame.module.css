@@ -1,12 +1,23 @@
 .description-game {
+  padding: 20%;
   display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
-.start-btn {
-  cursor: pointer;
-  padding: 2px 8px;
-  border-radius: 4px;
-  border: none;
-  background-color: #b87239;
-  outline: none;
+.btn-group {
+  display: flex;
+  flex-flow: row nowrap;
+  margin: 10px;
+}
+
+.title {
+  color: #ffffff;
+}
+
+.text {
+  color: #ffffff;
 }

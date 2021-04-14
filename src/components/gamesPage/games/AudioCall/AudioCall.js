@@ -2,41 +2,34 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import S from './AudioCall.module.css';
 import DescriptionGame from './DescriptionGame';
-
-const ContantGame = () => {
-  return (
-    <>
-      <button className="play-words">PLAY</button>
-      <button>Test 1</button>
-      <button>Test 2</button>
-      <button>Test 3</button>
-      <button>Test 4</button>
-      <button>Test 5</button>
-    </>
-  );
-};
+import ContentGame from './ContentGame';
 
 const AudioCall = () => {
   const [isGame, setIsGame] = useState(false);
   const [words, setWords] = useState(null);
+  const [level, setLevel] = useState(null);
+  const [page, setPage] = useState(0);
   const onClickStartBtn = () => {
     setIsGame((prevIsGame) => !prevIsGame);
   };
+  const onSetLevel = (num) => {
+    setLevel(num);
+  };
 
   useEffect(() => {
-    fetch('https://rs-lang.herokuapp.com/words')
-      .then((res) => res.json())
-      .then((data) => setWords(data));
-  }, []);
+    if (level) {
+      fetch(`https://rs-lang.herokuapp.com/words?group=${level - 1}&page=${page}`)
+        .then((res) => res.json())
+        .then((data) => setWords(words ? [...words, ...data] : data));
+    }
+  }, [level, page]);
 
-  if (words) {
-    console.log(words);
-  }
+  const isActiveBtn = words ? true : false;
 
   return (
     <div className={S['audio-call-wrapper']}>
-      {!isGame && <DescriptionGame handlerStartBtn={onClickStartBtn} />}
-      {isGame && <ContantGame />}
+      {!isGame && <DescriptionGame handlerStartBtn={onClickStartBtn} activeBtn={isActiveBtn} level={level} changeLevel={onSetLevel} />}
+      {isGame && <ContentGame words={words} />}
     </div>
   );
 };
