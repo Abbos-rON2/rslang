@@ -1,0 +1,12 @@
+.description-game {
+  display: flex;
+}
+
+.start-btn {
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: none;
+  background-color: #b87239;
+  outline: none;
+}
