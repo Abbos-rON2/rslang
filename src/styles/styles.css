@@ -8,7 +8,7 @@
   flex-direction: column;
 }
 
-.title {
+.title, .h1 {
   color: #40a9ff;
 }
 
@@ -193,4 +193,45 @@ footer {
     -ms-transform: translate(0, 60vh);
         transform: translate(0, 60vh);
   }
+}
+.team_wrapper{
+  display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+/* #Abbos{
+  background: url('../assets/team1.jpg');
+  background-size: cover;
+}
+#Mariya{
+  background: url('../assets/team3.jpg');
+  background-size: cover;
+}
+#Sergey{
+  background: url('../assets/team1.jpg');
+  background-size: cover;
+}
+#Yuliya{
+  background: url('../assets/team2.JPG');
+  background-size: cover;
+} */
+.member_div{
+  width: 400px;
+    height: 300px;
+    border-radius: 20px;
+    display: flex;
+    background: white;
+    overflow: hidden;
+}
+.member_info{
+  /* bottom: 0;
+  position: absolute;
+  width: inherit;
+  background: #ffffff8f; */
+  display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.main_page_team{
+  min-height: 500px;
 }
