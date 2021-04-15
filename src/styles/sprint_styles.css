@@ -21,14 +21,14 @@
 .points_3 {
   background: #1890ffa8;
 }
-.points{
+.points {
   font-size: 24px;
-  font-family: 'Indie Flower', cursive;
+  font-family: "Indie Flower", cursive;
   color: white;
   text-shadow: 2px 1px 1px #0000006e;
 }
-.level-points{
-  font-family: 'Indie Flower', cursive;
+.level-points {
+  font-family: "Indie Flower", cursive;
   color: #5d5353;
 }
 .learn_section {
@@ -42,13 +42,13 @@
   height: 16px;
   border-radius: 50%;
   border: 1px solid green;
- 
 }
 .words_section {
   height: 70%;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 18px;
 }
 .buttons_section {
   height: 20%;
@@ -60,10 +60,28 @@
 .sprint-wrapper {
   background-image: url(../assets/sprint_back.jpg);
   height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  
 }
-.timer-wrapper{
+.sprint-welcome {
+  padding: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.sprint-welcome h1, .sprint-welcome h3{
+  color: white;
+}
+.timer-wrapper {
   padding: 10px;
 }
-.time-value{
+.time-value {
   font-size: 30px;
 }

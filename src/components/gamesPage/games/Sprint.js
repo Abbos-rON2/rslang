@@ -1,11 +1,10 @@
-import { Fragment ,useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import "../../../styles/sprint_styles.css";
 import "antd/dist/antd.css";
 import { Button } from 'antd'
 import SprintGame from './SprintGame'
 
 export default function Sprint({location}) {
-  console.log(location)
   const [mode, setMode] = useState()
   const [words, setWords] = useState([])
   const [level, setLevel] = useState(null)
@@ -24,9 +23,9 @@ export default function Sprint({location}) {
     ]).then(([words1, words2, words3]) => {
         setWords(words.concat(words1, words2, words3));
     })
-    }}, [level]);
+    }}, [randomPage, randomPage2, randomPage3, words, level]);
 
-  useEffect(() => { setMode(location.state.from === 'GamesPage' ? 'general' : 'personal') }, [])
+  useEffect(() => { setMode(location.state.from === 'GamesPage' ? 'general' : 'personal') }, [location.state.from])
 
   const selectLevels = Array(6).fill('').map( (item,i) => <Button type="primary" key={i} onClick={() => setLevel(i+1)} shape="round" size='small'>{`Level ${i + 1}`}</Button>)
 
