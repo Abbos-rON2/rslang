@@ -5,26 +5,24 @@ import AudioCall from "./games/AudioCall";
 import Sprint from "./games/Sprint";
 import OurGame from "./games/OurGame";
 
-import { useState } from "react";
-
 export default function GamesPage() {
   const { path, url } = useRouteMatch();
-  const games = listOfGames.map((game) => {
+  const games = listOfGames.map(({name, icon}) => {
     const location = {
-      pathname: `${url}/${game.name}`,
+      pathname: `${url}/${name}`,
       state: { from: "GamesPage" },
     };
 
     return (
       <div
         className="games_div animate__animated animate__backInLeft"
-        id={game.name}
-        key={game.name}
+        id={name}
+        key={name}
       >
         <Link to={location}>
-          {game.name}
+          {name}
           <br />
-          {game.icon}
+          {icon}
         </Link>
       </div>
     );

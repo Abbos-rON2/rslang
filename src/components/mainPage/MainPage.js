@@ -7,7 +7,7 @@ export default function MainPage() {
   const memberOfTeam = teamInfo.map(({ name, photo, text, link }) => {
     return (
       <div className="member_div" id={name} key={name}>
-        <img src={photo}></img>
+        <img src={photo} alt={name}></img>
         <div className="member_info">
           <h3 className="main_h1">
             {name}{" "}
