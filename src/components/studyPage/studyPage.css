@@ -1,3 +1,8 @@
+.study-page_links {
+    display: flex;
+    justify-content: space-around;
+}
+
 .buttons__container {
     display: flex;
     justify-content: center;
