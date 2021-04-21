@@ -32,7 +32,7 @@ footer {
   justify-content: space-between;
 }
 
-.github_wrapper > a {
+.github_wrapper>a {
   margin-left: 10%;
   color: rgba(0, 0, 0, 0.692);
 }
@@ -50,16 +50,18 @@ footer {
 .main_page_video,
 .main_page_team {
   width: 100%;
-  min-height: 300px;
+  /* min-height: 200px; */
   background: #ffffffa1;
-  padding-top: 5%;
+  padding-top: 30px;
 }
-.about_text > p {
-  width: 30%; 
+
+.about_text>p {
+  max-width: 500px;
   margin: 0 auto;
 }
-.main_page_about{
-  min-height: 250px;
+
+.main_page_about {
+  /* min-height: 250px; */
 }
 
 .main_video {
@@ -67,19 +69,21 @@ footer {
   max-height: 300px;
 }
 
-.study_wrapper {
-  display: flex;
-  flex-direction: column;
-}
-.units_wrapper,
-.games_wrapper {
+/* .units_wrapper, */
+/* .games_wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 50px;
   padding: 50px;
   max-width: 60%;
   margin: 0 auto;
+} */
+
+.units_wrapper,
+.games_wrapper {
+  padding: 30px;
 }
+
 .unit_div,
 .games_div {
   display: flex;
@@ -92,9 +96,21 @@ footer {
   border-radius: 5px;
   font-weight: 600;
 }
+
+.unit_div a,
+.games_div a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
 .select_level_title {
   font-size: 16px;
 }
+
 .undisplayed {
   display: none;
 }
@@ -116,13 +132,13 @@ footer {
 .savanna-wrapper {
   display: flex;
   flex-direction: column;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("https://cdn.britannica.com/92/140492-050-0D2E3D22/Australian-Outback-trees-grasses-savanna-landscapes.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../assets/savanna-bg.jpg');
   height: calc(100vh - 60px);
 }
+
 .savanna-welcome {
   padding: 20%;
   display: flex;
@@ -132,9 +148,11 @@ footer {
   width: 100%;
   height: 100%;
 }
-.savanna-welcome > * {
+
+.savanna-welcome>* {
   color: white;
 }
+
 .savanna-header {
   display: flex;
   height: 25px;
@@ -142,20 +160,34 @@ footer {
   justify-content: space-between;
   padding: 0 10%;
 }
+
 .savanna-settings {
   color: white;
 }
+
 .savanna-body {
-  padding-bottom: 10%;
+  padding-bottom: 40px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: calc(100% - 65px);
 }
+
 .savanna-options {
   display: flex;
   justify-content: center;
 }
+
+.savanna-option.f {
+  background-color: crimson;
+  transition: .3s;
+}
+
+.savanna-option.t {
+  background-color: lightgreen;
+  transition: .3s;
+}
+
 .savanna-option {
   cursor: pointer;
   color: white;
@@ -164,42 +196,51 @@ footer {
   background: #ffffff44;
   padding: 5px;
 }
+
 .savanna-level {
   margin-bottom: 10px;
 }
+
 .savanna-word {
   color: white;
   font-size: 20px;
 }
+
 .savanna-word_animate {
   animation: word 3s linear 1;
 }
+
 .savanna-gameOver {
   margin-top: 40vh;
   color: white;
   font-size: 24px;
 }
+
 .modal-text,
 .modal-points {
   display: flex;
   justify-content: center;
   font-size: 24px;
 }
+
 .modal-points {
   color: #03a9f4;
 }
+
 @keyframes word {
   0% {
     -webkit-transform: translate(0, 0);
     -ms-transform: translate(0, 0);
     transform: translate(0, 0);
   }
+
   100% {
     -webkit-transform: translate(0, 60vh);
     -ms-transform: translate(0, 60vh);
     transform: translate(0, 60vh);
   }
 }
+
 .team_wrapper {
   display: flex;
   justify-content: space-evenly;
@@ -207,7 +248,14 @@ footer {
   margin-top: 3%;
 }
 
+.members-wrapper {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
 .member_div {
+  margin-bottom: 20px;
   width: 350px;
   height: 250px;
   border-radius: 20px;
@@ -215,11 +263,21 @@ footer {
   background: white;
   overflow: hidden;
 }
+
 .member_info {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
 }
+
+.member_img {
+  width: 195px;
+}
+
+.member_name {
+  padding-top: 20px;
+  color: #40a9ff;
+}
+
 .main_page_team {
   min-height: 500px;
 }

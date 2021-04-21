@@ -1,15 +1,17 @@
 import Video from "./Video";
 import "animate.css/animate.css";
 import { teamInfo } from "../../constants/constants";
+import {Row, Col} from 'antd'
 import { GithubOutlined } from "@ant-design/icons";
 
 export default function MainPage() {
-  const memberOfTeam = teamInfo.map(({ name, photo, text, link }) => {
+  const membersOfTeam = teamInfo.map(({ name, photo, text, link }) => {
     return (
-      <div className="member_div" id={name} key={name}>
-        <img src={photo} alt={name}></img>
+      <Col xs={24} md={11} xxl={6} className='members-wrapper ' key={name}>
+      <div className="member_div" id={name}>
+        <img src={photo} alt={name} className='member_img'></img>
         <div className="member_info">
-          <h3 className="main_h1">
+          <h3 className="member_name">
             {name}{" "}
             <a href={link}>
               <GithubOutlined />
@@ -18,6 +20,7 @@ export default function MainPage() {
           <div>{text}</div>
         </div>
       </div>
+      </Col>
     );
   });
   return (
@@ -38,7 +41,7 @@ export default function MainPage() {
       </section>
       <section className="main_page_team">
         <h1 className="main_h1">Наша команда</h1>
-        <div className="team_wrapper">{memberOfTeam} </div>
+        <Row justify="center">{membersOfTeam}</Row>
       </section>
     </div>
   );
