@@ -7,6 +7,7 @@ import correct from '../../../../assets/sound_correct.mp3'
 import incorrect from '../../../../assets/sound_incorrect.mp3'
 import Welcome from './Welcome'
 import Option from './Option'
+import GameOver from '../GameOver'
 
 export default function Savanna({location}) {
   const [sound_true] = useSound(correct)
@@ -15,6 +16,7 @@ export default function Savanna({location}) {
   const [animation, setAnimation] = useState(false)
   const [mode, setMode] = useState()
   const [welcome, setWelcome] = useState(true)
+  const [score, setScore] = useState(0)
   const [level, setLevel] = useState(null)
   const [page, setPage] = useState(0)
   const [words, setWords] = useState(null)
@@ -50,6 +52,7 @@ export default function Savanna({location}) {
     if(word !== undefined && answerWords[answer] !== undefined && answer !== null ){
       if(word.wordTranslate === answerWords[answer].wordTranslate){
         sound_true()
+        setScore(score + 1)
       }else{
         sound_false()
         subtract()
@@ -64,8 +67,8 @@ export default function Savanna({location}) {
     if(round && !gameOver){
       startRound()
     }
-    if((round + 1) % 5 === 0) {
-      setPage(page + 1)
+    if(round % 5 === 3) {
+      setPage(page + 1) 
     }
   }, [round])
 
@@ -113,6 +116,24 @@ export default function Savanna({location}) {
     }
   }
 
+  const returnToGame = () =>{
+    setWelcome(true)
+    setRound(0)
+    setLevel(null)
+    setPage(0)
+    setWords(null)
+    setGameOver(false)
+    setLifes(Array(5).fill(true))
+  }
+
+  const restartGame = () =>{
+    setWelcome(true)
+    setRound(0)
+    setPage(0)
+    setWords(null)
+    setGameOver(false)
+    setLifes(Array(5).fill(true))
+  }
 
   const lifesNodes = lifes.map((life,i) => life === true ? <HeartFilled key={i} style={{color: 'white'}}/> : <HeartOutlined key={i} style={{color: 'white'}}/>)
   
@@ -126,12 +147,13 @@ export default function Savanna({location}) {
        page={page}
        level={level}
        setLevel={setLevel} /> : 
-        gameOver ? <div className="savanna-gameOver">Game Over</div> : 
+        gameOver ? <GameOver points={score} gameOver={gameOver} returnToGame={returnToGame} restartGame={restartGame}/> : 
       <>
         <div className="savanna-header">
           <div className="savanna-settings">Settings</div>
-          <div className="savanna-lifes">
-            {lifesNodes}
+          <div className="savanna-info">
+            <div className="savanna-lifes">{lifesNodes}</div>
+            <div className="savanna-score">Score: {score}</div>
           </div>
         </div>
         <div className="savanna-body">
@@ -139,9 +161,7 @@ export default function Savanna({location}) {
           className={animation ? 'savanna-word savanna-word_animate' : 'savanna-word'} 
           onAnimationEnd={timeout} 
           >{word ? word.word : '' }</div>
-          <div className="savanna-options">
-            {words ? answerNodes: ''}
-          </div>
+          <div className="savanna-options">{words ? answerNodes: ''}</div>
         </div>
       </>
       }

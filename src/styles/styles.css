@@ -158,10 +158,15 @@ footer {
   height: 25px;
   width: 100%;
   justify-content: space-between;
-  padding: 0 10%;
+  padding: 20px 10% 0;
 }
 
 .savanna-settings {
+  color: white;
+}
+
+.savanna-score {
+  font-size: 18px;
   color: white;
 }
 

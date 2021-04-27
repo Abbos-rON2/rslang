@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import { Modal, Button } from "antd";
 
-export default function GameOver({ points, gameOver }) {
+export default function GameOver({ points, gameOver, restartGame, returnToGame }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
@@ -21,9 +21,16 @@ export default function GameOver({ points, gameOver }) {
         onOk={handleOk}
         footer={[
           <Button
+          key="submit"
+          type="primary"
+          onClick={restartGame}
+        >
+          Restart
+        </Button>,
+          <Button
             key="submit"
             type="primary"
-            onClick={handleOk}
+            onClick={returnToGame}
           >
             Ok
           </Button>,
