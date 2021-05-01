@@ -1,3 +1,41 @@
+.unit-page{
+    padding-bottom: 40px;
+}
+
+.unit-cards{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.unit-card{
+    margin: 0 5px 20px;
+    width: 20%;
+    background-color: aliceblue;
+}
+.unit-card img{
+    max-width: 100%;
+}
+.unit-pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.unit-pag__active{
+    border: 1px solid black;
+}
+.unit-pagination div{
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+    background-color: aliceblue;
+}
+
+
+
+
+
 .study-page_links {
     display: flex;
     justify-content: space-around;

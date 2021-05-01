@@ -4,7 +4,7 @@ import team2 from "./../assets/team2.JPG";
 import team3 from "./../assets/team3.jpg";
 import team4 from "./../assets/team4.jpg";
 
-export const numberOfUnits = [1, 2, 3, 4, 5, 6];
+export const Units = [1, 2, 3, 4, 5, 6];
 export const listOfGames = [
   {
     name: "Саванна",
