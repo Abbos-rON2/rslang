@@ -1,57 +1,32 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import UnitCard from "./UnitCard";
+import UnitPagination from './UnitPagination'
+
 
 export default function Unit() {
-  const { number } = useParams();
+  const { unit } = useParams();
   const [page, setPage] = React.useState(0);
   const [words, setWords] = React.useState();
 
   React.useEffect(() => {
-    fetch(`https://rs-lang.herokuapp.com/words?group=${number}&page=${page}`)
+    fetch(`https://rs-lang.herokuapp.com/words?group=${unit}&page=${page}`)
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
         setWords(res)
       });
-  }, [page]);
+  }, [page, unit]);
+ 
 
-  const paginationFunc = (item, i) => {
-    let num =  -1;
-    if(page === 0){
-      if(i === 0) num = 0
-      if(i === 1) num = 1
-      if(i === 2) num = 29
-    }
-    if(page > 0 && page < 29){
-      if(i === 0) num = 0
-      if(page === 1) {
-      }else{
-        if(i === 1) num = page -1 
-      }
-      if(i === 2) num = page
-      if(page === 28) {
-      }else{
-        if(i === 3) num = page +1 
-      }
-      if(i === 4) num = 29
-    }
-    if(page === 29){
-      if(i === 0) num = 0
-      if(i === 1) num = 28
-      if(i === 2) num = 29
-    }
-    return num === -1 ? null : <div  className={num === page ? `unit-pag__active`: null} onClick={() => setPage(num)} key={num}>{num+1}</div>
 
-  }
-  const links = [...Array(5)].map(paginationFunc)
 
-  const cards = words?.map((item, i) =>  <UnitCard {...item} key={i} /> )
+  const cards = words?.map((item, i) =>  <UnitCard {...item} key={i}/> )
 
   return (
   <div className="unit-page">
     <div className='unit-cards'>{cards}</div>
-    <div className="unit-pagination">{links}</div>
+    <UnitPagination page ={page} setPage={setPage}/>
   </div>
   );
 }
